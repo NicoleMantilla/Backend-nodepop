@@ -49,9 +49,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
 
 // comprobar si es un error de validación
   if (err.array) {
@@ -61,8 +59,19 @@ app.use(function(err, req, res, next) {
     err.message = `Error in ${errorInfo.location}, param "${errorInfo.param}" ${errorInfo.msg}`;
   }
 
-  // render the error page
   res.status(err.status || 500);
+
+// si es una petición al API, responder con formato JSON 
+if(req.originalUrl.startsWith('/api')) {
+  res.json({error: err.message });
+  return;
+  }
+
+// set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+//render the error page
   res.render('error');
 });
 
