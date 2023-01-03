@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('./lib/connectMongoose');
+require('./routes/api/anuncios');
 
 
 var indexRouter = require('./routes/index');
