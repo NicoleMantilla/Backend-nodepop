@@ -18,5 +18,26 @@ router.get ('/', async (req, res, next) => {
     }
 })
 
+//cuando reciba una peticion Get/api/agentes/(id)
+// Devuelve un anuncio en particular con su id 
+router.get('/:id', async(req, res, next) => {
+    try {
+    const id = req.params.id;
+
+    // buscar un anuncio en la base de datos 
+    const anuncio = await Anuncio.findById(id);
+
+    res.json({results: anuncio})
+// POST /api/anuncios)
+
+    } catch (error) {
+        next(err)
+        
+    }
+    
+
+})
+
+
 
 module.exports = router;
