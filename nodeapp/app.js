@@ -23,8 +23,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/**
+ * Rutas de mi API
+ */
+app.use('/api/anuncios', require('./routes/api/anuncios'));
+
+/**
+ * Rutas de mi Website
+ */
+
+app.use('/', function(req, res, next) {
+  console.log('recibo una petición');
+  next();
+})
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,6 +52,14 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+// comprobar si es un error de validación
+  if (err.array) {
+    err.status = 422; // error de validacion
+    const errorInfo = err.array({ onlyFirstError: true})[0];
+    console.log(errorInfo);
+    err.message = `Error in ${errorInfo.location}, param "${errorInfo.param}" ${errorInfo.msg}`;
+  }
 
   // render the error page
   res.status(err.status || 500);
