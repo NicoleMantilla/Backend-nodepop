@@ -20,7 +20,7 @@ router.get ('/', async (req, res, next) => {
         //ordenacion 
         const sort = req.query.sort;
         //selección de campos 
-        const fields = req.query.fields;//http://localhost:3001/api/anuncios?fields=nombre
+        const fields = req.query.fields;//http://localhost:3000/api/anuncios?fields=nombre
 
 
         const objfiltro = {};
