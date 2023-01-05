@@ -1,4 +1,9 @@
 # Backend-nodepop
+<div align="center">
+  <a href="https://github.com/NicoleMantilla/Backend-nodepop">
+    <img src="https://i.pinimg.com/564x/bf/fd/5d/bffd5d635ba2bdb7dd97cd2a9981c816.jpg" alt="Logo">
+  </a>
+</div>
 Applicación para el curso de Backend con Node.js y MongoDB, que contiene anuncios de venta y compra de usuarios. 
 
 ## Como arrancamos la base de datos en Linux y en Mac
@@ -53,3 +58,16 @@ GET / api/ anuncios
             "tags":["lifestyle","work"
             ]
             }
+            
+ ## Examples routers page
+ 
+* http://localhost:3000/anuncios
+
+Home, show all advertiesment, for this URL. We can aplly filters and pagination.
+
+filter examples:
+* http://localhost:3000/api/anuncios?nombre
+* http://localhost:3000/api/anuncios?sort=-precio&limit=2&skip=1
+* http://localhost:3000/api/anuncios?fields=nombre
+* http://localhost:3000/api/anuncios?tags=lifestyle&venta=false
+
