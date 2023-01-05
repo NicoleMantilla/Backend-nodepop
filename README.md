@@ -4,7 +4,8 @@
     <img src="https://i.pinimg.com/564x/bf/fd/5d/bffd5d635ba2bdb7dd97cd2a9981c816.jpg" alt="Logo">
   </a>
 </div>
-Applicación para el curso de Backend con Node.js y MongoDB, que contiene anuncios de venta y compra de usuarios. 
+App for Backend module with Node.js and MongoDB, Buy and sell ads application for users.
+
 
 ## Como arrancamos la base de datos en Linux y en Mac
 ./bin/mongod --dbpath ./datapop
