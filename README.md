@@ -29,6 +29,13 @@ Name: admin
 Password: 1234
 
 
+## DATE BASE 
+
+```sh
+use nodepop
+```
+
+
 
 ## API Documentation 
 
