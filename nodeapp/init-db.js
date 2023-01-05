@@ -44,12 +44,12 @@ async function initAnuncios() {
 
 function preguntaSiNo(texto) {
     return new Promise((resolve, reject) => {
-      const interface = readline.createInterface({
+      const inter = readline.createInterface({
         input: process.stdin,
         output: process.stdout
       });
-      interface.question(texto, respuesta => {
-        interface.close();
+      inter.question(texto, respuesta => {
+        inter.close();
         if (respuesta.toLowerCase() === 'si') {
           resolve(true);
           return;
