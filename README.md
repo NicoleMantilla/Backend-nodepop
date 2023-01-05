@@ -1,7 +1,7 @@
 # Backend-nodepop
 <div align="center">
   <a href="https://github.com/NicoleMantilla/Backend-nodepop">
-    <img src="https://i.pinimg.com/564x/bf/fd/5d/bffd5d635ba2bdb7dd97cd2a9981c816.jpg" alt="Logo">
+    <img src="https://i.pinimg.com/564x/d5/47/bc/d547bca247f8843e56889e2dc25a5c5b.jpg" alt="Logo">
   </a>
 </div>
 App for Backend module with Node.js and MongoDB, Buy and sell ads application for users.
