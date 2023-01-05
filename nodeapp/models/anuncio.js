@@ -11,12 +11,14 @@ const anuncioSchema = mongoose.Schema({
   tags: { type: [String], index: true }
 });
 
+
 // creamos un método estático
-anuncioSchema.statics.listar = function(filtro, skip, limit, sort) {
-  const query = Anuncio.find(filtro);
+anuncioSchema.statics.listar = function(objfiltro, skip, limit, sort, fields) {
+  const query = Anuncio.find(objfiltro);
   query.skip(skip);
   query.limit(limit);
   query.sort(sort);
+  query.select(fields);
   return query.exec()
 };
 

@@ -17,7 +17,10 @@ router.get ('/', async (req, res, next) => {
         //paginacion 
         const skip = req.query.skip;
         const limit = req.query.limit;
+        //ordenacion 
         const sort = req.query.sort;
+        //selección de campos 
+        const fields = req.query.fields;//http://localhost:3001/api/anuncios?fields=nombre
 
 
         const objfiltro = {};
@@ -33,28 +36,34 @@ router.get ('/', async (req, res, next) => {
             objfiltro.venta = venta;//api/anuncios?venta=false
         }
         if (precio) {
-            if (precio.includes('-')){
-              let precioArr = precio.split('-');
-              filter.precio = {};
-              if (precioArr[0]){
-                filter.precio['$gte'] = precioArr[0];
-              }
-              if (precioArr[1]){
-                filter.precio['$lte'] = precioArr[1];
-              }
-            }else{
-              filter.precio = precio;
-            }
+          if (precio.substring(0, 1) === '-') // Precio comienza por -
+          {
+              precio = precio.substring(1);
+              objfiltro.precio = { '$lt': precio }; // Precio menor que
           }
-
-        const anuncios = await Anuncio.listar(objfiltro, skip, limit, sort);
+          else if (precio.substring(precio.length-1, precio.length) === '-') { // Precio acaba en -
+              precio = precio.substring(0,precio.length-1);
+              objfiltro.precio = { '$gt': precio};
+          }
+          else if (precio.includes('-')) // Rango de precios
+          {
+              const precioi = precio.substring(0, precio.indexOf('-'));
+              const preciof = precio.substring(precio.indexOf('-') + 1, precio.length);  
+              objfiltro.precio = { '$gt': precioi, '$lt': preciof };
+          }
+          else { // Precio exacto
+              objfiltro.precio = precio;
+          }
+      }
+   
+        const anuncios = await Anuncio.listar(objfiltro, skip, limit, sort, fields);
         res.json({ results: anuncios })
     } catch (errr) {
         next(errr)
     }
 })
 
-// GET /api/anunci
+// GET /api/anuncios
 
 //cuando reciba una peticion Get/api/anuncios/(id)
 // Devuelve un anuncio en particular con su id 
@@ -80,10 +89,10 @@ router.put('/:id', async (req, res, next) => {
     try {
   
       const id = req.params.id;
-      const anuncioDato = req.body;
+      const anuncioData = req.body;
   
-      const anuncioActualizado = await Anuncio.findOneAndUpdate({ _id: id}, anuncioDato, {
-        new: true // esto hace que nos devuelva el documento actualizado
+      const anuncioActualizado = await Anuncio.findOneAndUpdate({ _id: id}, anuncioData, {
+        new: true 
       });
   
       res.json({ result: anuncioActualizado });
@@ -97,9 +106,9 @@ router.put('/:id', async (req, res, next) => {
   router.post('/', async (req, res, next) => {
     try {
   
-      const anuncioDato = req.body;
+      const anuncioData = req.body;
   
-      const anuncio = new Anuncio(anuncioDato);
+      const anuncio = new Anuncio(anuncioData);
   
       const anuncioGuardado = await anuncio.save();
   
